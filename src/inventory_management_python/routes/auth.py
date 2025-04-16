@@ -18,7 +18,7 @@ router = APIRouter()
 
 
 @router.post("/login")
-async def login(payload: AuthenticateUserModel):
+async def login(payload: AuthenticateUserModel) -> dict:
     try:
         session = Session(engine)
 
@@ -65,7 +65,7 @@ async def login(payload: AuthenticateUserModel):
 
 
 @router.post("/register")
-async def register(payload: CreateUserModel):
+async def register(payload: CreateUserModel) -> dict:
     try:
         session = Session(engine)
 

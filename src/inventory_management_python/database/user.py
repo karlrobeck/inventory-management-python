@@ -22,7 +22,7 @@ class User(Base):
     )
     password: Mapped[str] = mapped_column(String(100), nullable=False)
 
-    def set_password(self, raw_password: str):
+    def set_password(self, raw_password: str) -> None:
         self.password = sha256(raw_password.encode("utf-8")).hexdigest()
 
     def check_password(self, raw_password: str) -> bool:

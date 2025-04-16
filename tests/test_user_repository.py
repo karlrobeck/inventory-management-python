@@ -1,6 +1,9 @@
 from uuid import uuid4
 
 import pytest
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session
+
 from inventory_management_python.database import Base
 from inventory_management_python.database.user import (
     AuthenticateUserModel,
@@ -8,8 +11,6 @@ from inventory_management_python.database.user import (
     UpdateUserModel,
     UserRepository,
 )
-from sqlalchemy import create_engine
-from sqlalchemy.orm import Session
 
 
 @pytest.fixture

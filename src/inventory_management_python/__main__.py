@@ -8,5 +8,5 @@ app = FastAPI()
 app.include_router(api_router, prefix="/api")
 
 
-def main():
+def main() -> None:
     run(app)
