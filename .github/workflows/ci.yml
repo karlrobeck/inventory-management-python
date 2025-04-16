@@ -1,0 +1,52 @@
+name: Python CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  lint-format-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: latest
+          virtualenvs-create: true
+      
+      - name: Install dependencies
+        run: |
+          poetry install --with dev
+          # Install development dependencies if not already specified
+          poetry add --group dev ruff mypy pytest-cov
+      
+      - name: Lint and format check with Ruff
+        run: |
+          poetry run ruff check .
+      
+      - name: Format check with Ruff
+        run: |
+          poetry run ruff format --check .
+      
+      - name: Type check with mypy
+        run: |
+          poetry run mypy src/
+      
+      - name: Test with pytest
+        run: |
+          poetry run pytest --cov=src tests/
+      
+      - name: Upload coverage report
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage.xml
+          fail_ci_if_error: false
